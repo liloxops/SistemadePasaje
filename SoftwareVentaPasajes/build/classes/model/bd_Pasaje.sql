@@ -32,11 +32,12 @@ create table bus(
 
 create table horarioBus (
     id int auto_increment,
-    horario datetime,
+    horario date,
     fk_bus int,
     foreign key (fk_bus) references bus(id),
     primary key(id)
 );
+
 create table pasaje(
     id int auto_increment,
     fk_origen int,
