@@ -15,7 +15,7 @@ import model.Conductor;
  *
  * @author pabli
  */
-class MySQL_ConductorDAO implements ConductorDAO {
+public class MySQL_ConductorDAO implements ConductorDAO {
     
     MySQL_ConexionDAO c;
     private ResultSet rs;

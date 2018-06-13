@@ -15,10 +15,11 @@ import model.Pasaje;
  *
  * @author pabli
  */
-class MySQL_PasajeDAO implements PasajeDAO {
+public class MySQL_PasajeDAO implements PasajeDAO {
     
     MySQL_ConexionDAO c;
     private ResultSet rs;
+    private String query;
 
     public MySQL_PasajeDAO() throws SQLException, ClassNotFoundException {
         //Conexion
@@ -26,8 +27,9 @@ class MySQL_PasajeDAO implements PasajeDAO {
     }
 
     @Override
-    public void create(Pasaje p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void create(Pasaje p) throws SQLException {
+        query = "insert into pasaje value(null,"+p.getAsiento()+",now(),"+p.getFk_vendedor()+","+p.getFk_horario()+")";
+        c.ejecutar(query);
     }
 
     @Override

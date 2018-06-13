@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author pabli
  */
-class MySQL_ConexionDAO implements ConexionDAO {
+public class MySQL_ConexionDAO implements ConexionDAO {
     
     
     private Connection con; // Establecer la conexión

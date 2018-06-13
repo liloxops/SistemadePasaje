@@ -15,10 +15,11 @@ import model.Vendedor;
  *
  * @author pabli
  */
-class MySQL_VendedorDAO implements VendedorDAO {
+public class MySQL_VendedorDAO implements VendedorDAO {
     
     MySQL_ConexionDAO c;
     private ResultSet rs;
+    private String query;
 
     public MySQL_VendedorDAO() throws SQLException, ClassNotFoundException {
          //Conexion
@@ -26,8 +27,9 @@ class MySQL_VendedorDAO implements VendedorDAO {
     }
 
     @Override
-    public void create(Vendedor v) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void create(Vendedor v) throws SQLException {
+        query = "insert into vendedor value(null,'"+v.getNombre()+"','"+v.getRut()+"','"+v.getPass()+"')";
+        c.ejecutar(query);
     }
 
     @Override

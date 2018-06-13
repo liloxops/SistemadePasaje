@@ -8,6 +8,7 @@ package factories;
 import dao.HorarioBusDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import model.HorarioBus;
 
@@ -15,11 +16,13 @@ import model.HorarioBus;
  *
  * @author pabli
  */
-class MySQL_HorarioBusDAO implements HorarioBusDAO {
+public class MySQL_HorarioBusDAO implements HorarioBusDAO {
     
     MySQL_ConexionDAO c;
     private ResultSet rs;
-
+    private String query;
+    private List<HorarioBus> listaHorarioBus;
+    
     public MySQL_HorarioBusDAO() throws SQLException, ClassNotFoundException {
         //Conexion
         c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
@@ -31,8 +34,25 @@ class MySQL_HorarioBusDAO implements HorarioBusDAO {
     }
 
     @Override
-    public List<HorarioBus> read() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<HorarioBus> read() throws SQLException {
+        query = "select * from horarioBus";
+        
+        HorarioBus hb;
+        listaHorarioBus = new ArrayList<>();
+        rs = c.ejecutarSelec(query);
+        
+        while(rs.next()){
+            hb = new HorarioBus();
+            
+            hb.setId(rs.getInt(1));
+            hb.setHoraSalida(rs.getTime(3));
+            hb.setFk_bus(rs.getInt(4));
+            
+            listaHorarioBus.add(hb);
+        }
+        c.close();
+        
+        return listaHorarioBus;
     }
 
     @Override

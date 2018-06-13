@@ -1,11 +1,27 @@
 package gui;
 
+import factories.MySQL_HorarioBusDAO;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.HorarioBus;
+import model.TMBus;
 
 public class App extends javax.swing.JFrame {
 
+    private  MySQL_HorarioBusDAO listaBus;
+    
     public App() {
         initComponents();
+        try {
+            listaBus = new MySQL_HorarioBusDAO();
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setLocationRelativeTo(null);
         FrameVenta.setVisible(true);
         jPanel4.setVisible(true);
@@ -14,6 +30,13 @@ public class App extends javax.swing.JFrame {
         jPanel5.setVisible(true);
         jPanel5.setBackground(Color.LIGHT_GRAY);
         FrameVenta.setBounds(0, 100, 500, 600);
+        
+        
+        try {
+            cargarTabla();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -93,7 +116,7 @@ public class App extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblBuses = new javax.swing.JTable();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Venta De Pasajes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -517,7 +540,7 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(430, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,8 +568,8 @@ public class App extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Horario de Buses", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblBuses.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        tblBuses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -557,7 +580,7 @@ public class App extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblBuses);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -572,8 +595,8 @@ public class App extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -597,7 +620,7 @@ public class App extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-       
+
     }//GEN-LAST:event_btn2ActionPerformed
 
     /**
@@ -704,6 +727,17 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblBuses;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla() throws ClassNotFoundException {
+        try {
+            List<HorarioBus> listaBuses = this.listaBus.read();
+            TMBus tm = new TMBus(listaBuses);
+            tblBuses.setModel(tm);
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

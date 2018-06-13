@@ -4,7 +4,6 @@ public class Bus {
 
     private int id;
     private String placa;
-    private int asiento;
     private int fk_conductor;
 
     public int getId() {
@@ -21,14 +20,6 @@ public class Bus {
 
     public void setPlaca(String placa) {
         this.placa = placa;
-    }
-
-    public int getAsiento() {
-        return asiento;
-    }
-
-    public void setAsiento(int asiento) {
-        this.asiento = asiento;
     }
 
     public int getFk_conductor() {

@@ -8,6 +8,7 @@ package factories;
 import dao.CiudadDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import model.Ciudad;
 
@@ -15,10 +16,12 @@ import model.Ciudad;
  *
  * @author pabli
  */
-class MySQL_CiudadDAO implements CiudadDAO {
+public class MySQL_CiudadDAO implements CiudadDAO {
     
     MySQL_ConexionDAO c;
     private ResultSet rs;
+    private String query;
+    private List<Ciudad> ciudades;
 
     public MySQL_CiudadDAO() throws SQLException, ClassNotFoundException {
          c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
@@ -30,8 +33,26 @@ class MySQL_CiudadDAO implements CiudadDAO {
     }
 
     @Override
-    public List<Ciudad> read() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Ciudad> read() throws SQLException {
+        query = "select * from ciudad";
+        
+        ciudades = new ArrayList<>();
+        
+        Ciudad ci;
+        
+        rs = c.ejecutarSelec(query);
+        
+        while(rs.next()){
+            ci = new Ciudad();
+            
+            ci.setId(rs.getInt(1));
+            ci.setNombre(rs.getString(2));
+            
+            ciudades.add(ci);
+        }
+        c.close();
+        
+        return ciudades;
     }
 
     @Override

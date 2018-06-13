@@ -24,7 +24,6 @@ create table vendedor (
 create table bus(
     id int auto_increment,
     placa varchar(10),
-    asiento int,
     fk_conductor int,
     foreign key (fk_conductor) references conductor(id),
     primary key(id)
@@ -32,26 +31,63 @@ create table bus(
 
 create table horarioBus (
     id int auto_increment,
-    horario date,
     fk_bus int,
+    hora_Salida time,
+    fk_origen int,
+    fk_destino int,
+    precio int,
+    foreign key (fk_origen) references ciudad(id),
+    foreign key (fk_destino) references ciudad(id),    
     foreign key (fk_bus) references bus(id),
     primary key(id)
 );
+
+
 
 create table pasaje(
     id int auto_increment,
-    fk_origen int,
-    fk_destino int,
+    asiento int,
     fecha date,
-    fk_bus int,
     fk_vendedor int,
-    foreign key (fk_origen) references ciudad(id),
-    foreign key (fk_destino) references ciudad(id),
-    foreign key (fk_bus) references bus(id),
+    fk_horario int,
     foreign key (fk_vendedor) references vendedor(id),
+    foreign key (fk_horario) references horarioBus(id),
     primary key(id)
 );
 
+/*--------------INSERT--------------*/
+insert into ciudad value(null,'Las Cabras');
+insert into ciudad value(null,'Peumo');
+insert into ciudad value(null,'San Vicente T.T');
+insert into ciudad value(null,'Rancagua');
+insert into ciudad value(null,'Santiago');
+
+insert into conductor value(null,'Juan Perez');
+insert into conductor value(null,'Diego Lopez');
+insert into conductor value(null,'Edunaldo Rubio');
+insert into conductor value(null,'Lilixops');
+insert into conductor value(null,'Pabli');
+
+insert into bus value(null,'uf-as-45',1);
+insert into bus value(null,'sd-xc-00',2);
+insert into bus value(null,'qw-tr-78',3);
+insert into bus value(null,'ty-pp-22',4);
+insert into bus value(null,'ca-ca-66',5);
+
+insert into horarioBus value(null,1,'09:30:00',3,4,2000);
+insert into horarioBus value(null,2,'10:30:00',3,5,3500);
+insert into horarioBus value(null,3,'11:30:00',3,4,2000);
+insert into horarioBus value(null,4,'12:30:00',3,5,3500);
+insert into horarioBus value(null,5,'13:30:00',3,4,2000);
+
+
+/*----------------------------------*/
+
+-- select bus.placa,horarioBus.hora from bus,horarioBus where bus.id = horarioBus.fk_bus;
 
 select * from pasaje;
 select * from horarioBus;
+select * from bus;
+select * from conductor;
+select * from ciudad;
+select * from vendedor;

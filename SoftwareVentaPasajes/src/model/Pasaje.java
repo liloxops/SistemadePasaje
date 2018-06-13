@@ -3,13 +3,12 @@ package model;
 import java.util.Date;
 
 public class Pasaje {
-    
+
     private int id;
-    private int origen;
-    private int destino;
+    private int asiento;
     private Date fecha;
-    private int bus;
-    private int vendedor;
+    private int fk_vendedor;
+    private int fk_horario;
 
     public int getId() {
         return id;
@@ -19,20 +18,12 @@ public class Pasaje {
         this.id = id;
     }
 
-    public int getOrigen() {
-        return origen;
+    public int getAsiento() {
+        return asiento;
     }
 
-    public void setOrigen(int origen) {
-        this.origen = origen;
-    }
-
-    public int getDestino() {
-        return destino;
-    }
-
-    public void setDestino(int destino) {
-        this.destino = destino;
+    public void setAsiento(int asiento) {
+        this.asiento = asiento;
     }
 
     public Date getFecha() {
@@ -43,23 +34,22 @@ public class Pasaje {
         this.fecha = fecha;
     }
 
-    public int getBus() {
-        return bus;
+    public int getFk_vendedor() {
+        return fk_vendedor;
     }
 
-    public void setBus(int bus) {
-        this.bus = bus;
+    public void setFk_vendedor(int fk_vendedor) {
+        this.fk_vendedor = fk_vendedor;
     }
 
-    public int getVendedor() {
-        return vendedor;
+    public int getFk_horario() {
+        return fk_horario;
     }
 
-    public void setVendedor(int vendedor) {
-        this.vendedor = vendedor;
+    public void setFk_horario(int fk_horario) {
+        this.fk_horario = fk_horario;
     }
     
     
-    
-    
+
 }
