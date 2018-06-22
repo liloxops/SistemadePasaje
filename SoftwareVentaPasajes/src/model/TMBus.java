@@ -10,15 +10,15 @@ import javax.swing.table.TableModel;
 
 public class TMBus implements TableModel {
 
-    private List<HorarioBus> listaBuses;
+    private List<HorarioBusSelect> listaBuses;
     private MySQL_BusDAO bus;
 
-    public TMBus(List<HorarioBus> listaBuses) throws SQLException, ClassNotFoundException {
+    public TMBus(List<HorarioBusSelect> listaBuses) throws SQLException, ClassNotFoundException {
         this.listaBuses = listaBuses;
         bus = new MySQL_BusDAO();
     }
 
-    public HorarioBus getHorarioBuses(int index) {
+    public HorarioBusSelect getHorarioBuses(int index) {
         return listaBuses.get(index);
     }
 
@@ -29,14 +29,21 @@ public class TMBus implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 1;
+        return 4;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
+            case 0:
+                return "ID";
+            case 1:
+                return "Hora Salida";
+            case 2:
+                return "Destino";
             default:
-                return "Hora";
+                return "Precio";
+                
         }
     }
 
@@ -54,11 +61,17 @@ public class TMBus implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         
-        HorarioBus hb = listaBuses.get(rowIndex);
+        HorarioBusSelect hbs = listaBuses.get(rowIndex);
         
         switch(columnIndex){
+            case 0:
+                return hbs.getId();
+            case 1:
+                return hbs.getHoraSalida();
+            case 2:
+                return hbs.getFk_destino();
             default:
-                return hb.getHoraSalida();
+                return hbs.getPrecio();
         
         }
     }

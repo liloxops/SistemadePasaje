@@ -11,4 +11,5 @@ public interface PasajeDAO {
     List<Pasaje> read()throws SQLException, ClassNotFoundException;
     void update(Pasaje p)throws SQLException, ClassNotFoundException;
     void delete(String id)throws SQLException, ClassNotFoundException;
+    List<Pasaje> numAsiento(int id_horario)throws SQLException, ClassNotFoundException;
 }

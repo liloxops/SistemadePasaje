@@ -13,13 +13,6 @@ create table conductor (
     nombre varchar(30),
     primary key(id)
 );
-create table vendedor (
-    id int auto_increment,
-    nombre varchar(30),
-    rut varchar(12),
-    pass varchar(8),
-    primary key(id)
-);
 
 create table bus(
     id int auto_increment,
@@ -42,20 +35,23 @@ create table horarioBus (
     primary key(id)
 );
 
-
+select horarioBus.id, bus.placa, horarioBus.hora_salida, ciudad.nombre, horarioBus.precio from horarioBus,bus,ciudad where bus.id = horarioBus.fk_bus and horarioBus.fk_destino = ciudad.id;
 
 create table pasaje(
     id int auto_increment,
     asiento int,
     fecha date,
-    fk_vendedor int,
     fk_horario int,
-    foreign key (fk_vendedor) references vendedor(id),
     foreign key (fk_horario) references horarioBus(id),
     primary key(id)
 );
 
 /*--------------INSERT--------------*/
+
+-- select 
+-- 
+-- insert into vendedor value(null,'Alexis Sanchez','13569874-6','as7');
+
 insert into ciudad value(null,'Las Cabras');
 insert into ciudad value(null,'Peumo');
 insert into ciudad value(null,'San Vicente T.T');
@@ -80,14 +76,20 @@ insert into horarioBus value(null,3,'11:30:00',3,4,2000);
 insert into horarioBus value(null,4,'12:30:00',3,5,3500);
 insert into horarioBus value(null,5,'13:30:00',3,4,2000);
 
-
+insert into pasaje value(null,4,now(),3);
+insert into pasaje value(null,6,now(),3);
+insert into pasaje value(null,28,now(),1);
+insert into pasaje value(null,19,now(),3);
 /*----------------------------------*/
 
 -- select bus.placa,horarioBus.hora from bus,horarioBus where bus.id = horarioBus.fk_bus;
+
+-- select asiento from pasaje where fk_horario = 3;
+
+
 
 select * from pasaje;
 select * from horarioBus;
 select * from bus;
 select * from conductor;
 select * from ciudad;
-select * from vendedor;

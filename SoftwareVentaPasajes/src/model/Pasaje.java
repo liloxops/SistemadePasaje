@@ -7,7 +7,6 @@ public class Pasaje {
     private int id;
     private int asiento;
     private Date fecha;
-    private int fk_vendedor;
     private int fk_horario;
 
     public int getId() {
@@ -32,14 +31,6 @@ public class Pasaje {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public int getFk_vendedor() {
-        return fk_vendedor;
-    }
-
-    public void setFk_vendedor(int fk_vendedor) {
-        this.fk_vendedor = fk_vendedor;
     }
 
     public int getFk_horario() {

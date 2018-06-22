@@ -45,8 +45,11 @@ public class MySQL_HorarioBusDAO implements HorarioBusDAO {
             hb = new HorarioBus();
             
             hb.setId(rs.getInt(1));
+            hb.setFk_bus(rs.getInt(2));
             hb.setHoraSalida(rs.getTime(3));
-            hb.setFk_bus(rs.getInt(4));
+            hb.setFk_origen(rs.getInt(4));
+            hb.setFk_destino(rs.getInt(5));
+            hb.setPrecio(rs.getInt(6));
             
             listaHorarioBus.add(hb);
         }
