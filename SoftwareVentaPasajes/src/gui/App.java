@@ -5,6 +5,7 @@ import factories.MySQL_HorarioBusSelectDAO;
 import factories.MySQL_PasajeDAO;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,8 @@ public class App extends javax.swing.JFrame {
 
     private MySQL_HorarioBusSelectDAO listaBus;
     int numAsi;
+    int asiento;
+    List<Pasaje> listaAsientos;
 
     public App() {
         initComponents();
@@ -43,7 +46,7 @@ public class App extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -557,15 +560,28 @@ public class App extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblBusesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBusesMouseReleased
-        if (evt.getClickCount() == 2) {
-            FrameVenta.setVisible(true);
-            this.setVisible(false);
-            int fila = tblBuses.getSelectedRow();
+        try {
             
-            TMBus id_Bus = (TMBus) tblBuses.getModel();
-            
-            lblIdHorario.setText(String.valueOf(fila + 1));
-            lblIdHorario.setVisible(false);
+            if (evt.getClickCount() == 2) {
+
+                FrameVenta.setVisible(true);
+
+                this.setVisible(false);
+
+                int fila = tblBuses.getSelectedRow();
+
+                TMBus id_Bus = (TMBus) tblBuses.getModel();
+
+                lblIdHorario.setText(String.valueOf(fila + 1));
+
+                asientosVendidos();
+
+                lblIdHorario.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tblBusesMouseReleased
 
@@ -573,31 +589,33 @@ public class App extends javax.swing.JFrame {
         try {
             MySQL_PasajeDAO nuevo = new MySQL_PasajeDAO();
             Pasaje p = new Pasaje();
-            
+
             numAsi = Integer.valueOf(txtNumAciento.getText());
             int id_Horario = Integer.valueOf(lblIdHorario.getText());
-            
+
             p.setAsiento(numAsi);
             p.setFk_horario(id_Horario);
-            
+
             nuevo.create(p);
-            
-            JOptionPane.showMessageDialog(this,"Pasaje Vendido","VENDIDO", HEIGHT);
-            
-            
+
+            txtNumAciento.setText(null);
+            txtNumAciento.requestFocus();
+            asientosVendidos();
+            JOptionPane.showMessageDialog(this, "Pasaje Vendido", "VENDIDO", HEIGHT);
+
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         FrameVenta.setVisible(false);
         this.setVisible(true);
+        colorAsientos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -693,9 +711,114 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    private void colorAsientos(){
+
+    private void asientosVendidos() throws SQLException, ClassNotFoundException {
+        MySQL_PasajeDAO asiento = new MySQL_PasajeDAO();
+        
+        int id_Horario = Integer.valueOf(lblIdHorario.getText());
+
+                listaAsientos = new ArrayList<>();
+
+                listaAsientos = asiento.numAsiento(id_Horario);
+
+                System.out.println(listaAsientos);
+                for (Pasaje p : listaAsientos) {
+                    System.out.println(p);
+                    if (p.getAsiento() == 1) {
+                        lblAciento1.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 2) {
+                        lblAciento2.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 3) {
+                        lblAciento3.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 4) {
+                        lblAciento4.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 5) {
+                        lblAciento5.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 6) {
+                        lblAciento6.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 7) {
+                        lblAciento7.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 8) {
+                        lblAciento8.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 9) {
+                        lblAciento9.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 10) {
+                        lblAciento10.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 11) {
+                        lblAciento11.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 12) {
+                        lblAciento12.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 13) {
+                        lblAciento13.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 14) {
+                        lblAciento14.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 15) {
+                        lblAciento15.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 16) {
+                        lblAciento16.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 17) {
+                        lblAciento17.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 18) {
+                        lblAciento18.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 19) {
+                        lblAciento19.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 20) {
+                        lblAciento20.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 21) {
+                        lblAciento21.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 22) {
+                        lblAciento22.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 23) {
+                        lblAciento23.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 24) {
+                        lblAciento24.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 25) {
+                        lblAciento25.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 26) {
+                        lblAciento26.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 27) {
+                        lblAciento27.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 28) {
+                        lblAciento28.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 29) {
+                        lblAciento29.setBackground(Color.RED);
+                    }
+                    if (p.getAsiento() == 30) {
+                        lblAciento30.setBackground(Color.RED);
+                    }
+
+                }
+    }
+
+    private void colorAsientos() {
         lblAciento1.setBackground(Color.GREEN);
         lblAciento2.setBackground(Color.GREEN);
         lblAciento3.setBackground(Color.GREEN);
@@ -726,7 +849,7 @@ public class App extends javax.swing.JFrame {
         lblAciento28.setBackground(Color.GREEN);
         lblAciento29.setBackground(Color.GREEN);
         lblAciento30.setBackground(Color.GREEN);
-        
+
         lblAciento1.setOpaque(true);
         lblAciento2.setOpaque(true);
         lblAciento3.setOpaque(true);

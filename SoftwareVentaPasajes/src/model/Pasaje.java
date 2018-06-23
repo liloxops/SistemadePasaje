@@ -40,7 +40,12 @@ public class Pasaje {
     public void setFk_horario(int fk_horario) {
         this.fk_horario = fk_horario;
     }
-    
+
+    @Override
+    public String toString() {
+        return String.valueOf(asiento);
+    }
+
     
 
 }

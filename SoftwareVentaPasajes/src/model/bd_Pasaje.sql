@@ -46,6 +46,8 @@ create table pasaje(
     primary key(id)
 );
 
+select asiento from pasaje where fk_horario = 3;
+
 /*--------------INSERT--------------*/
 
 -- select 
