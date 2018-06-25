@@ -15,7 +15,7 @@ public class MySQL_HorarioBusSelectDAO implements HorarioBusSelectDAO {
     private List<HorarioBusSelect> listaBusesSelect;
 
     public MySQL_HorarioBusSelectDAO() throws SQLException, ClassNotFoundException {
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
     }
 
     @Override

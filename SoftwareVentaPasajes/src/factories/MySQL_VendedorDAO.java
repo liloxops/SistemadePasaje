@@ -27,7 +27,7 @@ public class MySQL_VendedorDAO implements VendedorDAO {
 
     public MySQL_VendedorDAO() throws SQLException, ClassNotFoundException {
         //Conexion
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
     }
 
     @Override
@@ -105,6 +105,29 @@ public class MySQL_VendedorDAO implements VendedorDAO {
     public String getByPass(String pass
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getNombre(String rut) throws SQLException {
+        
+        String query = "select vendedor.nombre from vendedor where rut = '" + rut + "'";
+        Vendedor v;
+        String nombre = "";
+        rs = c.ejecutarSelec(query);
+
+        if (rs.next()) {
+            v = new Vendedor();
+
+           
+            v.setNombre(rs.getString(1));
+            
+            nombre = v.getNombre();
+        }
+
+        c.close();
+        return nombre;
+
+
     }
 
 }

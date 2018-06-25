@@ -24,7 +24,7 @@ public class MySQL_CiudadDAO implements CiudadDAO {
     private List<Ciudad> ciudades;
 
     public MySQL_CiudadDAO() throws SQLException, ClassNotFoundException {
-         c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
+         c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
     }
 
     @Override

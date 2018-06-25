@@ -14,11 +14,13 @@ public interface VendedorDAO {
 
     void delete(String id) throws SQLException, ClassNotFoundException;
     
-    List<Vendedor> search(String exp) throws SQLException, ClassNotFoundException;;
+    List<Vendedor> search(String exp) throws SQLException, ClassNotFoundException;
     
-    String getByRut(String rut) throws SQLException, ClassNotFoundException;;
+    String getByRut(String rut) throws SQLException, ClassNotFoundException;
     
-    Vendedor getObjectByRut(String rut);
+    Vendedor getObjectByRut(String rut) throws SQLException, ClassNotFoundException;
     
-    String getByPass(String pass);
+    String getByPass(String pass)throws SQLException, ClassNotFoundException;
+    
+    String getNombre(String rut)throws SQLException, ClassNotFoundException;
 }

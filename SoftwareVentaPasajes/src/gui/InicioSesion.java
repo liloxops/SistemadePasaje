@@ -13,7 +13,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     Vendedor vendedor;
     private MySQL_VendedorDAO ven;
-    public static String rut = "";
+    public  String rut = "";
 
     public InicioSesion() {
 
@@ -139,6 +139,8 @@ public class InicioSesion extends javax.swing.JFrame {
 
             password = md5(password);
             App ap = new App();
+            
+            System.out.println("Rut Vendedor: "+rut);
 
             if (rut.equals("") || !rut.equals(DAOFactory.getInstance().getVendedorDAO(DAOFactory.Motor.MY_SQL).getByRut(rut))) {
                 JOptionPane.showMessageDialog(null, "Usuario Invalido", "ERROR", JOptionPane.OK_OPTION);
@@ -152,6 +154,11 @@ public class InicioSesion extends javax.swing.JFrame {
             } else {
                 vendedor = DAOFactory.getInstance().getVendedorDAO(DAOFactory.Motor.MY_SQL).search(rut).get(0);
                 System.out.println(vendedor.getId());
+            
+                String nombre = DAOFactory.getInstance().getVendedorDAO(DAOFactory.Motor.MY_SQL).getNombre(rut);
+                System.out.println("Nombre Vendedor: "+nombre);
+                JOptionPane.showMessageDialog(this, "Bienvenido Vendedor "+nombre, "VENDIDO", HEIGHT);
+
                 switch (vendedor.getId()) {
                     case 1:
                         ap.setLocationRelativeTo(null);

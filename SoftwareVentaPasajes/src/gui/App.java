@@ -4,6 +4,7 @@ import factories.MySQL_HorarioBusDAO;
 import factories.MySQL_HorarioBusSelectDAO;
 import factories.MySQL_PasajeDAO;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class App extends javax.swing.JFrame {
     int numAsi;
     int asiento;
     List<Pasaje> listaAsientos;
+    int limite = 2;
+    String horario;
 
     public App() {
         initComponents();
@@ -405,6 +408,12 @@ public class App extends javax.swing.JFrame {
 
         jLabel3.setText("N° ACIENTO:");
 
+        txtNumAciento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumAcientoKeyTyped(evt);
+            }
+        });
+
         jButton1.setText("Vender Pasaje");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -573,6 +582,13 @@ public class App extends javax.swing.JFrame {
                 TMBus id_Bus = (TMBus) tblBuses.getModel();
 
                 lblIdHorario.setText(String.valueOf(fila + 1));
+                
+                
+                int i = tblBuses.getSelectedRow(); 
+                horario = tblBuses.getValueAt(i,1).toString();
+                System.out.println("Buses:"+ horario);
+                
+                
 
                 asientosVendidos();
 
@@ -601,7 +617,11 @@ public class App extends javax.swing.JFrame {
             txtNumAciento.setText(null);
             txtNumAciento.requestFocus();
             asientosVendidos();
+            
+            
             JOptionPane.showMessageDialog(this, "Pasaje Vendido", "VENDIDO", HEIGHT);
+            JOptionPane.showMessageDialog(this, "Numero de Asiento: "+numAsi+ 
+                    "\n\n Horario: "+horario,"Pasaje Vendido ", HEIGHT);
 
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -617,6 +637,26 @@ public class App extends javax.swing.JFrame {
         this.setVisible(true);
         colorAsientos();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtNumAcientoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumAcientoKeyTyped
+        int k = (int) evt.getKeyChar();
+        if (txtNumAciento.getText().length()== limite){
+            evt.consume();
+        }
+        
+        if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k == 241 || k == 209) {
+            evt.setKeyChar((char) KeyEvent.VK_CLEAR);
+            JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
+        }
+        if (k == 10) {
+           //transfiere el foco si presionas enter
+            txtNumAciento.transferFocus();
+        }
+    }//GEN-LAST:event_txtNumAcientoKeyTyped
 
     /**
      * @param args the command line arguments

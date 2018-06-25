@@ -2,6 +2,7 @@
 create database BD_pasaje;
 
 use BD_pasaje;
+
 create table vendedor(
     id int auto_increment,
     nombre varchar(30),
@@ -63,6 +64,8 @@ select asiento from pasaje where fk_horario = 3;
 insert into vendedor value(null,'juan','11-1',md5('1234'));
 insert into vendedor value(null,'pato','22-2',md5('1234'));
 insert into vendedor value(null,'pedro','33-3',md5('1234'));
+
+select vendedor.nombre from vendedor where rut = '11-1';
 
 insert into ciudad value(null,'Las Cabras');
 insert into ciudad value(null,'Peumo');
