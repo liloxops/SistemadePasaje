@@ -2,7 +2,13 @@
 create database BD_pasaje;
 
 use BD_pasaje;
-
+create table vendedor(
+    id int auto_increment,
+    nombre varchar(30),
+    rut varchar(30),
+    pass varchar(50),
+    primary key(id)
+);
 create table ciudad  (
     id int auto_increment,
     nombre varchar(30),
@@ -54,6 +60,10 @@ select asiento from pasaje where fk_horario = 3;
 -- 
 -- insert into vendedor value(null,'Alexis Sanchez','13569874-6','as7');
 
+insert into vendedor value(null,'juan','11-1',md5('1234'));
+insert into vendedor value(null,'pato','22-2',md5('1234'));
+insert into vendedor value(null,'pedro','33-3',md5('1234'));
+
 insert into ciudad value(null,'Las Cabras');
 insert into ciudad value(null,'Peumo');
 insert into ciudad value(null,'San Vicente T.T');
@@ -95,3 +105,4 @@ select * from horarioBus;
 select * from bus;
 select * from conductor;
 select * from ciudad;
+select * from vendedor;

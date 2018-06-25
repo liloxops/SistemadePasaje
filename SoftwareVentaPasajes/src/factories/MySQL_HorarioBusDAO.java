@@ -25,7 +25,7 @@ public class MySQL_HorarioBusDAO implements HorarioBusDAO {
     
     public MySQL_HorarioBusDAO() throws SQLException, ClassNotFoundException {
         //Conexion
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
     }
 
     @Override

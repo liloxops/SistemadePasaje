@@ -25,7 +25,7 @@ public class MySQL_BusDAO implements BusDAO {
 
     public MySQL_BusDAO() throws SQLException, ClassNotFoundException {
         //Conexion
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
     }
 
    

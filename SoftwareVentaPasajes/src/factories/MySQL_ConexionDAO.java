@@ -72,7 +72,11 @@ public class MySQL_ConexionDAO implements ConexionDAO {
 
     @Override
     public void close() throws SQLException {
-        sen.close();
+        try {
+            sen.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQL_ConexionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 

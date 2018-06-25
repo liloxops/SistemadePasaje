@@ -25,7 +25,7 @@ public class MySQL_PasajeDAO implements PasajeDAO {
 
     public MySQL_PasajeDAO() throws SQLException, ClassNotFoundException {
         //Conexion
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
     }
 
     @Override
