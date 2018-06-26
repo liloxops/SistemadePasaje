@@ -22,7 +22,7 @@ public class MySQL_ConductorDAO implements ConductorDAO {
 
     public MySQL_ConductorDAO() throws SQLException, ClassNotFoundException {
         //Conexion
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
     }
 
     @Override

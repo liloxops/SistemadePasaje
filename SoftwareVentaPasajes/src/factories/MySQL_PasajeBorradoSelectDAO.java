@@ -14,7 +14,7 @@ public class MySQL_PasajeBorradoSelectDAO implements PasajeBorradoSelectDAO{
     private List<PasajeBorradoSelect> pasajesBorrados;
 
     public MySQL_PasajeBorradoSelectDAO() throws SQLException, ClassNotFoundException {
-         c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
+         c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
     }
 
     @Override

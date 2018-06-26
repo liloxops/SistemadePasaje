@@ -62,6 +62,11 @@ public class InicioSesion extends javax.swing.JFrame {
         });
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         txt_Password.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -268,6 +273,11 @@ public class InicioSesion extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_txt_PasswordKeyPressed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtUsuario.setText("");
+        txt_Password.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     public static void main(String args[]) {
 

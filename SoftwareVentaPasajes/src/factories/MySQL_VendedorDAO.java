@@ -27,7 +27,7 @@ public class MySQL_VendedorDAO implements VendedorDAO {
 
     public MySQL_VendedorDAO() throws SQLException, ClassNotFoundException {
         //Conexion
-        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");
+        c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "123456");
     }
 
     @Override

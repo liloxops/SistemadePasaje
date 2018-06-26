@@ -54,7 +54,6 @@ public class App extends javax.swing.JFrame {
         txtTarifa.setEditable(false);
         txtHoraSalida.setEditable(false);
         txtDestino.setEditable(false);
-        
 
         try {
             cargarTabla();
@@ -759,26 +758,22 @@ public class App extends javax.swing.JFrame {
                 TMBus id_Bus = (TMBus) tblBuses.getModel();
 
                 lblIdHorario.setText(String.valueOf(fila + 1));
-                
-                
-                int i = tblBuses.getSelectedRow(); 
-                horario = tblBuses.getValueAt(i,1).toString();
-                System.out.println("Buses:"+ horario);
+
+                int i = tblBuses.getSelectedRow();
+                horario = tblBuses.getValueAt(i, 1).toString();
+                System.out.println("Buses:" + horario);
                 precio = tblBuses.getValueAt(i, 3).toString();
                 destino = tblBuses.getValueAt(i, 2).toString();
-                
+
                 txtNumAciento.requestFocus();
                 txtHoraSalida.setText(horario);
                 txtTarifa.setText(precio);
                 txtDestino.setText(destino);
-                
-                
-                
-                
 
                 asientosVendidos();
 
                 lblIdHorario.setVisible(false);
+                cargarTablaHistorial();
             }
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -789,25 +784,29 @@ public class App extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            MySQL_PasajeDAO nuevo = new MySQL_PasajeDAO();
-            Pasaje p = new Pasaje();
+            if (!txtNumAciento.getText().equalsIgnoreCase("")) {
+                MySQL_PasajeDAO nuevo = new MySQL_PasajeDAO();
+                Pasaje p = new Pasaje();
 
-            numAsi = Integer.valueOf(txtNumAciento.getText());
-            int id_Horario = Integer.valueOf(lblIdHorario.getText());
+                numAsi = Integer.valueOf(txtNumAciento.getText());
+                int id_Horario = Integer.valueOf(lblIdHorario.getText());
 
-            p.setAsiento(numAsi);
-            p.setFk_horario(id_Horario);
+                p.setAsiento(numAsi);
+                p.setFk_horario(id_Horario);
 
-            nuevo.create(p);
+                nuevo.create(p);
 
-            txtNumAciento.setText(null);
-            txtNumAciento.requestFocus();
-            asientosVendidos();
-            
-            
-            JOptionPane.showMessageDialog(this, "Pasaje Vendido", "VENDIDO", HEIGHT);
-            JOptionPane.showMessageDialog(this, "Numero de Asiento: "+numAsi+ 
-                    "\n\n Horario: "+horario,"Pasaje Vendido ", HEIGHT);
+                txtNumAciento.setText(null);
+                txtNumAciento.requestFocus();
+                asientosVendidos();
+                cargarTablaHistorial();
+
+                JOptionPane.showMessageDialog(this, "Pasaje Vendido", "VENDIDO", HEIGHT);
+                JOptionPane.showMessageDialog(this, "Numero de Asiento: " + numAsi
+                        + "\n\n Horario: " + horario, "Pasaje Vendido ", HEIGHT);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un asiento");
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -826,10 +825,10 @@ public class App extends javax.swing.JFrame {
 
     private void txtNumAcientoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumAcientoKeyTyped
         int k = (int) evt.getKeyChar();
-        if (txtNumAciento.getText().length()== limite){
+        if (txtNumAciento.getText().length() == limite) {
             evt.consume();
         }
-        
+
         if (k >= 97 && k <= 122 || k >= 65 && k <= 90) {
             evt.setKeyChar((char) KeyEvent.VK_CLEAR);
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
@@ -839,7 +838,7 @@ public class App extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No puede ingresar letras!!!", "Ventana Error Datos", JOptionPane.ERROR_MESSAGE);
         }
         if (k == 10) {
-           //transfiere el foco si presionas enter
+            //transfiere el foco si presionas enter
             txtNumAciento.transferFocus();
         }
     }//GEN-LAST:event_txtNumAcientoKeyTyped
@@ -848,9 +847,9 @@ public class App extends javax.swing.JFrame {
         try {
             int id_horario;
             id_horario = Integer.parseInt(lblIdHorario.getText());
-            
+
             MySQL_PasajeDAO eliminar = new MySQL_PasajeDAO();
-            
+
             eliminar.delete(id_horario);
             colorAsientos();
         } catch (SQLException ex) {
@@ -862,9 +861,9 @@ public class App extends javax.swing.JFrame {
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         try {
-            cargarTablaHistorial();
-            
+
             FrameHistorial.setVisible(true);
+            cargarTablaHistorial();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -982,12 +981,12 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void cargarTablaHistorial() throws ClassNotFoundException{
+
+    private void cargarTablaHistorial() throws ClassNotFoundException {
         try {
             int id_histo;
             id_histo = Integer.parseInt(lblIdHorario.getText());
-            
+
             List<PasajeBorradoSelect> listaHistorial = this.listaHisto.read(id_histo);
             TMHistorialPasajes tmhp = new TMHistorialPasajes(listaHistorial);
             tblHistorial.setModel(tmhp);
@@ -998,108 +997,108 @@ public class App extends javax.swing.JFrame {
 
     private void asientosVendidos() throws SQLException, ClassNotFoundException {
         MySQL_PasajeDAO asiento = new MySQL_PasajeDAO();
-        
+
         int id_Horario = Integer.valueOf(lblIdHorario.getText());
 
-                listaAsientos = new ArrayList<>();
+        listaAsientos = new ArrayList<>();
 
-                listaAsientos = asiento.numAsiento(id_Horario);
+        listaAsientos = asiento.numAsiento(id_Horario);
 
-                System.out.println(listaAsientos);
-                for (Pasaje p : listaAsientos) {
-                    System.out.println(p);
-                    if (p.getAsiento() == 1) {
-                        lblAciento1.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 2) {
-                        lblAciento2.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 3) {
-                        lblAciento3.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 4) {
-                        lblAciento4.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 5) {
-                        lblAciento5.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 6) {
-                        lblAciento6.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 7) {
-                        lblAciento7.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 8) {
-                        lblAciento8.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 9) {
-                        lblAciento9.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 10) {
-                        lblAciento10.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 11) {
-                        lblAciento11.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 12) {
-                        lblAciento12.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 13) {
-                        lblAciento13.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 14) {
-                        lblAciento14.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 15) {
-                        lblAciento15.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 16) {
-                        lblAciento16.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 17) {
-                        lblAciento17.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 18) {
-                        lblAciento18.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 19) {
-                        lblAciento19.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 20) {
-                        lblAciento20.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 21) {
-                        lblAciento21.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 22) {
-                        lblAciento22.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 23) {
-                        lblAciento23.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 24) {
-                        lblAciento24.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 25) {
-                        lblAciento25.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 26) {
-                        lblAciento26.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 27) {
-                        lblAciento27.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 28) {
-                        lblAciento28.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 29) {
-                        lblAciento29.setBackground(Color.RED);
-                    }
-                    if (p.getAsiento() == 30) {
-                        lblAciento30.setBackground(Color.RED);
-                    }
+        System.out.println(listaAsientos);
+        for (Pasaje p : listaAsientos) {
+            System.out.println(p);
+            if (p.getAsiento() == 1) {
+                lblAciento1.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 2) {
+                lblAciento2.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 3) {
+                lblAciento3.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 4) {
+                lblAciento4.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 5) {
+                lblAciento5.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 6) {
+                lblAciento6.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 7) {
+                lblAciento7.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 8) {
+                lblAciento8.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 9) {
+                lblAciento9.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 10) {
+                lblAciento10.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 11) {
+                lblAciento11.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 12) {
+                lblAciento12.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 13) {
+                lblAciento13.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 14) {
+                lblAciento14.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 15) {
+                lblAciento15.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 16) {
+                lblAciento16.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 17) {
+                lblAciento17.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 18) {
+                lblAciento18.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 19) {
+                lblAciento19.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 20) {
+                lblAciento20.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 21) {
+                lblAciento21.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 22) {
+                lblAciento22.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 23) {
+                lblAciento23.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 24) {
+                lblAciento24.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 25) {
+                lblAciento25.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 26) {
+                lblAciento26.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 27) {
+                lblAciento27.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 28) {
+                lblAciento28.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 29) {
+                lblAciento29.setBackground(Color.RED);
+            }
+            if (p.getAsiento() == 30) {
+                lblAciento30.setBackground(Color.RED);
+            }
 
-                }
+        }
     }
 
     private void colorAsientos() {
