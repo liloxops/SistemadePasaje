@@ -13,6 +13,7 @@ public class MySQL_HorarioBusSelectDAO implements HorarioBusSelectDAO {
     private ResultSet rs;
     private String query;
     private List<HorarioBusSelect> listaBusesSelect;
+    private List<HorarioBusSelect> listaHorario;
 
     public MySQL_HorarioBusSelectDAO() throws SQLException, ClassNotFoundException {
         c = new MySQL_ConexionDAO("localhost", "bd_Pasaje", "root", "");

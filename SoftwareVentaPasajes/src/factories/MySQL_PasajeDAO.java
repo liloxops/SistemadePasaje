@@ -45,8 +45,10 @@ public class MySQL_PasajeDAO implements PasajeDAO {
     }
 
     @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(int id) throws SQLException {
+        query = "delete from pasaje where fk_horario = "+id;
+        
+        c.ejecutar(query);
     }
 
     @Override

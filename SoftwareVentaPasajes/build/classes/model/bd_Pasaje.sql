@@ -42,7 +42,7 @@ create table horarioBus (
     primary key(id)
 );
 
-select horarioBus.id, bus.placa, horarioBus.hora_salida, ciudad.nombre, horarioBus.precio from horarioBus,bus,ciudad where bus.id = horarioBus.fk_bus and horarioBus.fk_destino = ciudad.id;
+-- select horarioBus.id, bus.placa, horarioBus.hora_salida, ciudad.nombre, horarioBus.precio from horarioBus,bus,ciudad where bus.id = horarioBus.fk_bus and horarioBus.fk_destino = ciudad.id;
 
 create table pasaje(
     id int auto_increment,
@@ -53,10 +53,31 @@ create table pasaje(
     primary key(id)
 );
 
-select asiento from pasaje where fk_horario = 3;
+create table pasajeBorrado(
+    id int auto_increment,
+    asiento int,
+    fecha date,
+    fk_horario int,
+    foreign key (fk_horario) references horarioBus(id),
+    primary key(id)
+);
 
 /*--------------INSERT--------------*/
 
+
+
+-- select pasajeBorrado.asiento,pasajeBorrado.fecha,horarioBus.precio 
+-- from pasajeBorrado,horarioBus 
+-- where horarioBus.id = pasajeBorrado.fk_horario and pasajeBorrado.fk_horario = 3;
+
+
+create trigger eliminarPasaje after delete
+on pasaje
+for each row
+insert into pasajeBorrado(id,asiento,fecha,fk_horario)
+value(null,old.asiento,old.fecha,old.fk_horario);
+
+-- drop trigger eliminarPasaje;
 -- select 
 -- 
 -- insert into vendedor value(null,'Alexis Sanchez','13569874-6','as7');
@@ -65,7 +86,7 @@ insert into vendedor value(null,'juan','11-1',md5('1234'));
 insert into vendedor value(null,'pato','22-2',md5('1234'));
 insert into vendedor value(null,'pedro','33-3',md5('1234'));
 
-select vendedor.nombre from vendedor where rut = '11-1';
+-- select vendedor.nombre from vendedor where rut = '11-1';
 
 insert into ciudad value(null,'Las Cabras');
 insert into ciudad value(null,'Peumo');
